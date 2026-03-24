@@ -1,18 +1,30 @@
 'use client';
-
 import { useRouter } from "next/navigation";
+import { useEffect,useState } from "react";
 import Image from "next/image";
 import Button from "../../components/Button/Button";
 import FormInput from "@/app/components/Inputs/FormInput";
-import { useForm } from "react-hook-form";
-
+import { signup } from '@/app/actions/auth'
+import { useActionState } from 'react'
+import Swal from 'sweetalert2';
 
 
 export default function SignupForm() {
+  const [state, action, pending] = useActionState(signup, undefined)
   const router = useRouter();
 
-  const { register, errors, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log({ data });
+  useEffect(() => {
+    if (state?.success) {
+      Swal.fire({
+        title: 'Success!',
+        text: state.success,
+        icon: 'success',
+        confirmButtonText: 'OK',
+      }).then(() => {
+        router.push('/Auth/Signin');
+      });
+    }
+  }, [state?.success, router]);
 
   return (
     <div className="flex justify-center">
@@ -27,31 +39,23 @@ export default function SignupForm() {
               </div>
             </div>
 
-          <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit(onSubmit)}>
+          <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form className="space-y-4" action={action}>
                 <FormInput
                   label="Name"
                   name="name"
                   autoComplete="name"
                   required
                 />
+                {state?.errors?.name && <p>{state.errors.name}</p>}
                 <FormInput
                   label="Email address"
                   name="email"
                   type="email"
-                  // ref={register({
-                  //   required: "Email is required.",
-                  //   pattern: {
-                  //     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  //     message: "Please enter a valid email"
-                  //   }
-                  // })}
                   autoComplete="email"
                   required
                 />
-                {/* {errors.email && (
-                  <p style={{ color: 'red' }}>{errors.email.message}</p>
-                )} */}
+                {state?.errors?.email && <p>{state.errors.email}</p>}
                 <FormInput
                   label="Password"
                   name="password"
@@ -59,15 +63,45 @@ export default function SignupForm() {
                   autoComplete="current-password"
                   required
                 />
+                {state?.errors?.password && (
+                  <div className="text-red-500 text-sm">
+                    <p className="font-semibold">Password must:</p>
+                    <ul className="list-disc ml-5">
+                      {Array.isArray(state.errors.password) ? state.errors.password.map((error, idx) => (
+                        <li key={idx}>- {error}</li>
+                      )) : <li>- {state.errors.password}</li>}
+                    </ul>
+                  </div>
+                )}
                 <FormInput
-                  label="confirmpassword"
+                  label="Confirm Password"
                   name="confirmpassword"
                   type="password"
                   autoComplete="current-password"
                   required
                 />
+                {state?.errors?.confirmpassword && <p className="text-red-500 text-sm">{state.errors.confirmpassword}</p>}
+                <FormInput
+                  label="Telephone"
+                  name="telephone"
+                  type="tel"
+                  autoComplete="tel"
+                />
+                {state?.errors?.telephone && <p className="text-red-500 text-sm">{state.errors.telephone}</p>}
+                <label htmlFor="role" className="block text-sm font-medium leading-6 text-gray-900">
+                  Select Role
+                </label>
+                <select name="role" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-gray-400 sm:text-sm sm:leading-6">
+                  <option value="">Select Role</option>
+                  <option value="cashier">Cashier</option>
+                  <option value="manager">Manager</option>
+                </select>
+                {state?.errors?.role && <p className="text-red-500 text-sm">{state.errors.role}</p>}
+                <p className="text-xs text-gray-500 mt-1">
+                  Your role determines what you can access
+                </p>
               <div>
-              <Button variant="filled" label="Sign Up" />
+              <Button variant="filled" label={pending ? "Signing up..." : "Sign Up"} type="submit" disabled={pending} />
               </div>
             </form>
 

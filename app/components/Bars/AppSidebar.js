@@ -22,6 +22,7 @@ import {
   Assessment as AssessmentIcon,
   ShoppingCart as ShoppingCartIcon,
   Settings as SettingsIcon,
+  PeopleAlt,
 } from "@mui/icons-material";
 
 const customerNavItems = [
@@ -45,6 +46,7 @@ const managerNavItems = [
   { icon: <CalendarIcon />, name: "Different products", path: "/Retailer/Products" },
   { icon: <AssessmentIcon />, name: "Stock Verification", path: "/Retailer/Stock" },
   { icon: <ShoppingCartIcon />, name: "Restock Requests", path: "/Retailer/Restock" },
+  { icon: <PeopleAlt />, name: "Customer", path: "/Retailer/Customer" },
   { icon: <ReceiptIcon />, name: "Sales Reports", path: "/Retailer/Reports" },
   
 ];

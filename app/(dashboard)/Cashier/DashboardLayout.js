@@ -21,10 +21,10 @@ export default function DashboardLayout({ children }) {
       <Backdrop />
 
       <div
-        className={`flex-1 transition-all duration-300 ease-in-out ${mainContentMargin}`}
+        className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${mainContentMargin}`}
       >
         <AppHeader />
-        <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+        <div className="flex-1 overflow-y-auto p-4 mx-auto max-w-(--breakpoint-2xl) w-full">
           {children}
         </div>
       </div>

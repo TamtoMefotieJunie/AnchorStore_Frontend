@@ -3,10 +3,68 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "../../components/Button/Button";
-import FormInput from "@/app/components/Inputs/FormInput";
+import FormInput from "@/app/components/Inputs/FormInput"; 
+import { useState,useEffect } from "react";
+import { useActionState } from 'react';
+import { login } from '@/app/actions/auth';
+ 
 
 export default function SigninForm() {
   const router = useRouter();
+ const [state, action, pending] = useActionState(login, null);
+
+  useEffect(() => {
+    if (state?.success && state?.user) {
+      localStorage.setItem('user', JSON.stringify({
+        id: state.user._id || state.user.id,
+        name: state.user.Full_name || state.user.name,
+        email: state.user.email,
+        role: state.user.role,
+        token: state.token
+      }));
+      
+      if (state.token) {
+        localStorage.setItem('token', state.token);
+      }
+      
+      const role = state.user.role;
+      if (role === 'manager') {
+        router.push('Retailer');
+      } else if (role === 'cashier') {
+        router.push('Cashier');
+      } else {
+        router.push('Customer');
+      }
+    }
+  }, [state, router]);
+    const logOut = () => {
+        localStorage.removeItem('user');
+    }
+  //  const handleSubmit= async (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;  
+  //   const body = {
+  //     "email":form.email.value,
+  //     "password":form.password.value
+  //   }
+  //   console.log("Form data:", body);
+
+  //   const response = await fetch('http://127.0.0.1:5000/user/login', {
+  //     method: 'POST',
+  //     headers: {   
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(body)
+  //   });
+  //   const data = await response.json();
+  //   console.log('Response:', data);
+  //   if (response.ok) {
+  //     alert("Signin successful! Redirecting...");
+  //     router.push("/Cashier");
+  //   } else {
+  //     alert("Signin failed. Please check your credentials and try again.");
+  //   }
+  // }
 
   return (
     <div className="flex justify-center mt-25">
@@ -23,7 +81,7 @@ export default function SigninForm() {
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" action={action}>
                 <FormInput
                   label="Email address"
                   name="email"
@@ -31,6 +89,7 @@ export default function SigninForm() {
                   autoComplete="email"
                   required
                 />
+                {state?.errors?.email && ( <p className="text-red-500 text-sm mt-1">{state.errors.email}</p>)}
                 <FormInput
                   label="Password"
                   name="password"
@@ -38,13 +97,11 @@ export default function SigninForm() {
                   autoComplete="current-password"
                   required
                 />
+                {state?.errors?.password && ( <p className="text-red-500 text-sm mt-1">{state.errors.password}</p>)}
               <div>
-              <Button variant="filled" label="Sign In" 
-              onClick={() => {
-                router.push("/Customer");
-              }}
-              />
+              <Button variant="filled" label="Sign In" />
               </div>
+               {state?.success && (<p className="text-green-500 text-sm text-center">{state.success}</p>)}
             </form>
 
             <p className="mt-10 text-center text-sm text-gray-500">

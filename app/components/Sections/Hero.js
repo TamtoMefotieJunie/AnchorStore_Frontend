@@ -65,7 +65,11 @@ export default function Hero() {
                     Track inventory in real time, prevent stockouts, and keep your customers confident in your business.
                     </p>
                     <div className="mt-10 w-[40%] flex items-center justify-start mx-5">
-                    <Button variant="secondary" label="Get Started"/>
+                    <Button variant="secondary" label="Get Started"
+                    onClick={() => {
+                      router.push('/Auth/Signup')
+                    }}
+                    />
                     </div>
                 </div>
             </div>
