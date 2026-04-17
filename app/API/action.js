@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import axios from "axios";
+import { createCustomer } from "@/app/_Services/customerService";
 
 const categoryFormSchema = z.object({
   category_name: z.string().trim().min(1, { message: "Name field is required" }),
@@ -80,22 +81,6 @@ export async function createCustomerType(prevState,formData) {
     "description": validatedCustomerTypeFormData.data.description
   }
   console.log("Validated customer type data:", { name: data.name, description: data.description });
-  const url = 'http://127.0.0.1:5000/customer-type/create/new';
-  const options = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  try{
-    console.log("Sending POST request to create customer type with data:", data);
-    const response = await axios.post(url, data ,options)
-    console.log('Response:', response.data);
-
-  }catch(error){
-    console.log("Error creating customer type:", error.message);
-  }
-
-  return {
-    success: "New customer type saved successfully!",
-  };
+  const createCustomerType = await createCustomer(data);
+  return createCustomerType;
 }

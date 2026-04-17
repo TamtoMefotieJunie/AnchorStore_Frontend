@@ -1,8 +1,8 @@
 "use client";
-import { ThemeToggleButton } from "@components/Common/ThemeToggleButton";
-import NotificationDropdown from "@components/Header/NotificationDropdown";
-import UserDropdown from "@components/Header/UserDropdown";
-import { useSidebar } from "@components/dashboard/SidebarContext";
+import { ThemeToggleButton } from "@/app/Components/Common/ThemeToggleButton";
+import NotificationDropdown from "@/app/Components/Header/NotificationDropdown";
+import UserDropdown from "@/app/Components/Header/UserDropdown";
+import { useSidebar } from "@/app/Components/dashboard/SidebarContext";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";

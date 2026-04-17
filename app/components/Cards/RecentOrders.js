@@ -1,4 +1,4 @@
-import {Table,TableBody,TableCell,TableHeader,TableRow,} from "@components/ui/table";
+import {Table,TableBody,TableCell,TableHeader,TableRow,} from "@/app/Components/ui/table";
 import Image from "next/image";
 
 const tableData = [

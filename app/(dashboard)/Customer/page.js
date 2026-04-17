@@ -1,7 +1,7 @@
-import { EcommerceMetrics } from "@components/Cards/Metrics";
+import { EcommerceMetrics } from "@/app/Components/Cards/Metrics";
 import React from "react";
-import StatisticsChart from "@components/Cards/StatisticsChart";
-import RecentOrders from "@components/Cards/RecentOrders";
+import StatisticsChart from "@/app/Components/Cards/StatisticsChart";
+import RecentOrders from "@/app/Components/Cards/RecentOrders";
 
 export default function CustomerDashboard() {
   return (

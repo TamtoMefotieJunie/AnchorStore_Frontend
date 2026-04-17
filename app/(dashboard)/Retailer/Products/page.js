@@ -2,16 +2,18 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
 import DashboardLayout from '@/app/(dashboard)/Cashier/DashboardLayout'
-import Button from '@/app/components/Button/Button'
+import Button from '@/app/Components/Button/Button'
 import { AddCard, Done, NewLabel, Upload } from '@mui/icons-material'
 import SearchIcon from '@mui/icons-material/Search';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useActionState } from "react";
 import { createCategory } from "@app/API/action";
 import { createProduct } from '@/app/API/product';
-import SubmitButton from '@/app/components/Button/SubmitButton';
+import SubmitButton from '@/app/Components/Button/SubmitButton';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { getCustomers } from '@/app/_Services/customerService'
+
 
 const initialState = {
   success: "",
@@ -69,12 +71,10 @@ function Products() {
   }, [prodState.success, hasSubmittedProduct]);
   useEffect(() => {
     const fetchCustomerTypes = async () => {
-      const url = 'http://127.0.0.1:5000/customer-type/fetch/all';
       try{
-        console.log("Sending GET request to fetch customer types");
-        const response = await axios.get(url)
-        console.log('Response:', response.data.data);
-        setCustomerTypes(response.data.data);
+        const data = await getCustomers();
+        console.log('Response:', data);
+        setCustomerTypes(data);
       }catch(error){
         console.log("Error fetching customer type:", error.message);
       }

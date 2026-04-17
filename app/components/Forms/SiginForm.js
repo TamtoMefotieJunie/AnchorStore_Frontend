@@ -2,38 +2,43 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Button from "../../components/Button/Button";
-import FormInput from "@/app/components/Inputs/FormInput"; 
+import Button from "../Button/Button";
+import FormInput from "@/app/Components/Inputs/FormInput"; 
 import { useState,useEffect } from "react";
 import { useActionState } from 'react';
-import { login } from '@/app/actions/auth';
+import { login } from '@/app/Actions/auth';
  
 
 export default function SigninForm() {
   const router = useRouter();
  const [state, action, pending] = useActionState(login, null);
-
-  useEffect(() => {
+useEffect(() => {
     if (state?.success && state?.user) {
-      localStorage.setItem('user', JSON.stringify({
-        id: state.user._id || state.user.id,
-        name: state.user.Full_name || state.user.name,
-        email: state.user.email,
-        role: state.user.role,
-        token: state.token
-      }));
+      const userData = state.user.user || state.user;
+      const token = state.token || state.user.token;
+      const userToStore = {
+        id: userData._id,
+        name: userData.Full_name,
+        email: userData.email,
+        role: userData.role,
+        token: token
+      };
       
-      if (state.token) {
-        localStorage.setItem('token', state.token);
+      console.log('Storing user data:', userToStore);
+      localStorage.setItem('user', JSON.stringify(userToStore));
+      if (token) {
+        localStorage.setItem('token', token);
       }
-      
-      const role = state.user.role;
+      const stored = localStorage.getItem('user');
+      console.log('Verified stored user:', JSON.parse(stored));
+      const role = userData.role;
+      console.log('User role:', role);
       if (role === 'manager') {
-        router.push('Retailer');
+        router.push('/Retailer');
       } else if (role === 'cashier') {
-        router.push('Cashier');
+        router.push('../Cashier');
       } else {
-        router.push('Customer');
+        router.push('/Customer');
       }
     }
   }, [state, router]);
@@ -79,29 +84,26 @@ export default function SigninForm() {
             </div>
             
           </div>
-
+          {state?.success && (<p className="text-green-500 text-sm text-center">{state.success}</p>)}
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action={action}>
+            <form className="space-y-4" action={action}>
                 <FormInput
                   label="Email address"
                   name="email"
                   type="email"
                   autoComplete="email"
-                  required
                 />
-                {state?.errors?.email && ( <p className="text-red-500 text-sm mt-1">{state.errors.email}</p>)}
+                {state?.errors?.email && ( <p className="text-red-500 text-sm">{state.errors.email}</p>)}
                 <FormInput
                   label="Password"
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  required
                 />
-                {state?.errors?.password && ( <p className="text-red-500 text-sm mt-1">{state.errors.password}</p>)}
+                {state?.errors?.password && ( <p className="text-red-500 text-sm">{state.errors.password}</p>)}
               <div>
               <Button variant="filled" label="Sign In" />
               </div>
-               {state?.success && (<p className="text-green-500 text-sm text-center">{state.success}</p>)}
             </form>
 
             <p className="mt-10 text-center text-sm text-gray-500">

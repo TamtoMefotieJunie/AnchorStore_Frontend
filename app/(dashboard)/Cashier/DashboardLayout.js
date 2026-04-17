@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { useSidebar } from "@components/dashboard/SidebarContext";
-import AppHeader from "@components/Bars/AppHeader";
-import AppSidebar from "@components/Bars/AppSidebar";
-import Backdrop from "@components/dashboard/Backdrop";
+import { useSidebar } from "@/app/Components/dashboard/SidebarContext";
+import AppHeader from "@/app/Components/Bars/AppHeader";
+import AppSidebar from "@/app/Components/Bars/AppSidebar";
+import Backdrop from "@/app/Components/dashboard/Backdrop";
 
 export default function DashboardLayout({ children }) {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();

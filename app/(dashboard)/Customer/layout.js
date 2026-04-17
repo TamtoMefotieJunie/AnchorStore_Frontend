@@ -1,6 +1,6 @@
 import React from "react";
-import { SidebarProvider } from "@components/dashboard/SidebarContext";
-import { ThemeProvider } from "@components/dashboard/ThemeContext";
+import { SidebarProvider } from "@/app/Components/dashboard/SidebarContext";
+import { ThemeProvider } from "@/app/Components/dashboard/ThemeContext";
 import AdminLayoutContent from "@/app/(dashboard)/Customer/AdminLayoutContent";
 
 export default function AdminLayout({ children }) {

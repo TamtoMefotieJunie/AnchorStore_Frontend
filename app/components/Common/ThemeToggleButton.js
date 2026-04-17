@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "@components/dashboard/ThemeContext";
+import { useTheme } from "@/app/Components/dashboard/ThemeContext";
 
 export const ThemeToggleButton = () => {
   const { toggleTheme } = useTheme();

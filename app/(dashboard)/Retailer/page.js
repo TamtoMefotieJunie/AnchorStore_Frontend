@@ -1,10 +1,10 @@
-import { EcommerceMetrics } from "@components/Cards/Metrics";
+import { EcommerceMetrics } from "@/app/Components/Cards/Metrics";
 import React from "react";
-import InventoryChart from "@/app/components/Cards/InventoryChart";
+import InventoryChart from "@/app/Components/Cards/InventoryChart";
 import DashboardLayout from "../Cashier/DashboardLayout";
 import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import { Inventory2, PendingActions, Wallet } from "@mui/icons-material";
-import RecentOrders from "@/app/components/Cards/RecentOrders";
+import RecentOrders from "@/app/Components/Cards/RecentOrders";
 
 export default function CustomerDashboard() {
   return (

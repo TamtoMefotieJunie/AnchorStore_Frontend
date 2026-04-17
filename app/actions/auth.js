@@ -2,6 +2,7 @@
 "use server";
 
 import { SignupFormSchema } from "@/lib/signup"
+import { LoginFormSchema } from "@/lib/signin";
 import axios from "axios";
 import { z } from "zod";
  
@@ -10,7 +11,7 @@ export async function signup(state, formData) {
     name: formData.get('name'),
     email: formData.get('email'),
     password: formData.get('password'),
-    confirmPassword: formData.get('confirmpassword'),
+    confirmPassword: formData.get('confirmPassword'),
     telephone: formData.get('telephone'),
     role: formData.get('role'),
   };
@@ -24,7 +25,7 @@ export async function signup(state, formData) {
     };
   }
   const body = {
-    Full_name: validatedFields.data.name,
+    full_name: validatedFields.data.name,
     email: validatedFields.data.email,
     password: validatedFields.data.password,
     telephone: validatedFields.data.telephone || '',
@@ -51,8 +52,9 @@ export async function signup(state, formData) {
       data: response.data,
     };
   } catch (error) {
-    console.error('Signup error:', error.response?.data || error.message);
-    
+    console.log("FULL ERROR:", error);
+    console.log("RESPONSE DATA:", error.response?.data);
+        
     if (error.response?.data?.message) {
       const errorMessage = error.response.data.message;
       if (errorMessage.includes('email') || errorMessage.includes('Email')) {
@@ -67,13 +69,19 @@ export async function signup(state, formData) {
             telephone: [errorMessage],
           },
         };
+      } else if (errorMessage.includes('password') || errorMessage.includes('Password')) {
+        return {
+          errors: {
+            password: [errorMessage],
+          },
+        };
       }
     }
     
     return {
       errors: {
         name: [],
-        email: ['Signup failed. Please try again.'],
+        email: [error.response?.data?.message || 'Signup failed. Please try again.'],
         password: [],
         confirmPassword: [],
         telephone: [],

@@ -2,9 +2,9 @@
 import { useRouter } from "next/navigation";
 import { useEffect,useState } from "react";
 import Image from "next/image";
-import Button from "../../components/Button/Button";
-import FormInput from "@/app/components/Inputs/FormInput";
-import { signup } from '@/app/actions/auth'
+import Button from "../Button/Button";
+import FormInput from "@/app/Components/Inputs/FormInput";
+import { signup } from '@/app/Actions/auth'
 import { useActionState } from 'react'
 import Swal from 'sweetalert2';
 
@@ -75,12 +75,12 @@ export default function SignupForm() {
                 )}
                 <FormInput
                   label="Confirm Password"
-                  name="confirmpassword"
+                  name="confirmPassword"
                   type="password"
                   autoComplete="current-password"
                   required
                 />
-                {state?.errors?.confirmpassword && <p className="text-red-500 text-sm">{state.errors.confirmpassword}</p>}
+                {state?.errors?.confirmPassword && <p className="text-red-500 text-sm">{state.errors.confirmPassword}</p>}
                 <FormInput
                   label="Telephone"
                   name="telephone"

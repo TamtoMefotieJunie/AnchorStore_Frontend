@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import Button from '@app/components/Button/Button'
+import Button from '@/app/Components/Button/Button'
 import { useRouter } from 'next/navigation';
 
 const navigation = [

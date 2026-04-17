@@ -1,11 +1,11 @@
 "use client"
-import Button from "@/app/components/Button/Button";
+import Button from "@/app/Components/Button/Button";
 import { Autorenew, DownloadForOfflineOutlined, FilterAltRounded } from "@mui/icons-material";
 import React from "react";
-import {Table,TableBody,TableCell,TableHeader,TableRow,} from "@components/ui/table";
-import Search from '@components/ui/search';
+import {Table,TableBody,TableCell,TableHeader,TableRow,} from "@/app/Components/ui/table";
+import Search from '@/app/Components/ui/search';
 import { useSearchParams } from "next/navigation";
-import UserDropdown from "@components/Header/UserDropdown";
+import UserDropdown from "@/app/Components/Header/UserDropdown";
 // import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 
 

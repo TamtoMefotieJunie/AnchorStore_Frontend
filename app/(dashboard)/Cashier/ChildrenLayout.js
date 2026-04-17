@@ -1,8 +1,8 @@
 "use client";
 
-import { useSidebar } from "@components/dashboard/SidebarContext";
-import AppSidebar from "@components/Bars/AppSidebar";
-import Backdrop from "@components/dashboard/Backdrop";
+import { useSidebar } from "@/app/Components/dashboard/SidebarContext";
+import AppSidebar from "@/app/Components/Bars/AppSidebar";
+import Backdrop from "@/app/Components/dashboard/Backdrop";
 
 export default function ChildrenLayout({ children }) {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();

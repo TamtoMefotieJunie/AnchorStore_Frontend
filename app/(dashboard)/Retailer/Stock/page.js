@@ -1,7 +1,7 @@
 'use client'
-import PageHeading from '@/app/components/Header/PageHeading'
+import PageHeading from '@/app/Components/Header/PageHeading'
 import React,{useState} from 'react'
-import {Table,TableBody,TableCell,TableHeader,TableRow,} from "@components/ui/table";
+import {Table,TableBody,TableCell,TableHeader,TableRow,} from "@/app/Components/ui/table";
 import { MoreHoriz } from '@mui/icons-material';
 import { ChevronDownIcon } from 'lucide-react';
 

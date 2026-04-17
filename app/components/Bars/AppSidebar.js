@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback,useEffectEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useSidebar } from "@components/dashboard/SidebarContext";
+import { useSidebar } from "@/app/Components/dashboard/SidebarContext";
 
 import {
   Dashboard as DashboardIcon,
@@ -24,6 +24,7 @@ import {
   Settings as SettingsIcon,
   PeopleAlt,
 } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 const customerNavItems = [
   { icon: <DashboardIcon />, name: "Dashboard", path: "/Customer" },
@@ -38,7 +39,7 @@ const cashierNavItems = [
   { icon: <DashboardIcon />, name: "Dashboard", path: "/Cashier" },
   { icon: <AddShoppingCartIcon />, name: "New Sales", path: "/Cashier/Sales" },
   { icon: <ReceiptLongIcon />, name: "Recent Invoices", path: "/Cashier/Invoices" },
-  { icon: <InventoryIcon />, name: "Products", path: "/Cashier/products" },
+  { icon: <InventoryIcon />, name: "Products", path: "/Cashier/Products" },
 ];
 
 const managerNavItems = [
@@ -63,6 +64,7 @@ const AppSidebar = () => {
   const [userRole, setUserRole] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const Router = useRouter();
   const updateUserRole = useEffectEvent((role) => {
     setUserRole(role);
   });
@@ -74,13 +76,20 @@ const AppSidebar = () => {
     setIsLoading(loading);
   });
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('anchorStoreUser'));
-    const role = storedUser?.role?.toLowerCase() || 'customer';
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      console.log('Stored user in sidebar:', storedUser);
+
+      const role = storedUser?.role || 'customer';
+      const email = storedUser?.email || null;
     
     updateUserRole(role);
     updateUserEmail(storedUser?.email || null);
     updateLoadingState(false);
   }, []);
+  const logOut = () => {
+    localStorage.removeItem('user');
+    Router.push('/Auth/Signin');
+  }
 
   const getNavItems = () => {
     switch (userRole) {
@@ -100,19 +109,33 @@ const AppSidebar = () => {
     <ul className="flex flex-col gap-4">
       {items.map((item) => (
         <li key={item.path}>
-          <Link
-            href={item.path}
-            className={`menu-item group ${
-              isActive(item.path) ? "menu-item-active" : "menu-item-inactive"
-            }`}
-          >
-            <span className={isActive(item.path) ? "menu-item-icon-active" : "menu-item-icon-inactive"}>
-              {item.icon}
-            </span>
-            {(isExpanded || isHovered || isMobileOpen) && (
-              <span className="menu-item-text">{item.name}</span>
-            )}
-          </Link>
+          {item.name === "Logout" ? (
+            <button
+              onClick={logOut}
+              className="menu-item group menu-item-inactive w-full text-left"
+            >
+              <span className="menu-item-icon-inactive">
+                {item.icon}
+              </span>
+              {(isExpanded || isHovered || isMobileOpen) && (
+                <span className="menu-item-text">{item.name}</span>
+              )}
+            </button>
+          ) : (
+            <Link
+              href={item.path}
+              className={`menu-item group ${
+                isActive(item.path) ? "menu-item-active" : "menu-item-inactive"
+              }`}
+            >
+              <span className={isActive(item.path) ? "menu-item-icon-active" : "menu-item-icon-inactive"}>
+                {item.icon}
+              </span>
+              {(isExpanded || isHovered || isMobileOpen) && (
+                <span className="menu-item-text">{item.name}</span>
+              )}
+            </Link>
+          )}
         </li>
       ))}
     </ul>

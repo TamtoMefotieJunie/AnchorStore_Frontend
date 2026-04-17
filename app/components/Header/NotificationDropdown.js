@@ -2,8 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Dropdown } from "@components/Common/Dropdown";
-import { DropdownItem } from "@components/Common/DropdownItem";
+import { Dropdown } from "@/app/Components/Common/Dropdown";
+import { DropdownItem } from "@/app/Components/Common/DropdownItem";
 
 export default function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,4 @@
-import { useSidebar } from "@components/dashboard/SidebarContext";
+import { useSidebar } from "@/app/Components/dashboard/SidebarContext";
 import React from "react";
 
 const Backdrop= () => {

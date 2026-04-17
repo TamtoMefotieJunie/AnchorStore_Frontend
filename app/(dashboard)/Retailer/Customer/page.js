@@ -1,25 +1,23 @@
 'use client'
-import Button from '@/app/components/Button/Button'
+import Button from '@/app/Components/Button/Button'
 import React,{useActionState, useState,useEffect} from 'react'
 import { createCustomerType } from '@/app/API/action'
 import Image from 'next/image'
 import DashboardLayout from '../../Cashier/DashboardLayout'
 import { NewLabel } from '@mui/icons-material'
-import SubmitButton from '@/app/components/Button/SubmitButton';
+import SubmitButton from '@/app/Components/Button/SubmitButton';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import Swal from 'sweetalert2'
-import axios from 'axios';
+import { getCustomers } from '@/app/_Services/customerService'
 
 export default function Customer() {
 const [customerTypes, setCustomerTypes] = useState([]);
 useEffect(() => {
   const fetchCustomerTypes = async () => {
-    const url = 'http://127.0.0.1:5000/customer-type/fetch/all';
     try{
-      console.log("Sending GET request to fetch customer types");
-      const response = await axios.get(url)
-      console.log('Response:', response.data.data);
-      setCustomerTypes(response.data.data);
+      const data = await getCustomers();
+      console.log('Response:', data);
+      setCustomerTypes(data);
     }catch(error){
       console.log("Error fetching customer type:", error.message);
     }
@@ -114,14 +112,14 @@ const handleCustomerSubmit = async(e) => {
                 <p className="text-gray-500">No customer types found.</p>
             ) : (
                 customerTypes.map((type, index) => (
-                    <div key={index} className="bg-neutral-primary-soft block max-w-sm border border-gray-200 rounded-lg shadow-xl">
+                    <div key={index} className="bg-neutral-primary-soft max-w-sm h-95 border border-gray-200 rounded-lg shadow-xl flex flex-col">
                         <Image className="rounded-t-lg" src="/walk-in.jpg" alt="Image description" width={450} height={300}/>
-                        <div className="p-4 text-center">
+                        <div className="p-4 text-center flex-1 flex flex-col justify-between">
                             <h3 className="mb-2 text-lg font-semibold text-default">{type.name}</h3>
-                            <p className="mt-2 text-sm text-default">{type.description}</p> 
-                </div>
-            </div>
-             )))}
+                            <p className="mt-2 text-sm text-default line-clamp-3">{type.description}</p> 
+                        </div>
+                    </div>
+                 )))}
             
         </div>
     </div>

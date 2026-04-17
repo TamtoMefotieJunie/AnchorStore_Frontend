@@ -1,6 +1,6 @@
 "use client"
 
-import PageHeading from '@/app/components/Header/PageHeading'
+import PageHeading from '@/app/Components/Header/PageHeading'
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import React from 'react'
 import Image from 'next/image';
@@ -11,7 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@/app/components/Button/Button';
+import Button from '@/app/Components/Button/Button';
 import { DownloadForOffline } from '@mui/icons-material';
 
 export default function NewInvoice() {
